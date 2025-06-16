@@ -22,4 +22,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: smithav/Kubernetes-challenge:latest,smithav/Kubernetes-challenge:${{ github.sha }}
+          tags: smithav/kubernetes-challenge:latest,smithav/kubernetes-challenge:v1
