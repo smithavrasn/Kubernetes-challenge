@@ -7,11 +7,19 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      # ... existing code ...
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: smithav
+          password: ${{ secrets.DOCKER_PASSWORD }}
       -
         name: Build and push Docker image
-        uses: docker/build-push-action@v5 # Corrected action name here
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: smithav/your-repo-name:latest,smithav/your-repo-name:${{ github.sha }}
+          tags: smithav/Kubernetes-challenge:latest,smithav/Kubernetes-challenge:${{ github.sha }}
