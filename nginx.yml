@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: nginx:latest
+          image: smithav/kubernetes-challenge:v1
           ports:
             - containerPort: 80
 
