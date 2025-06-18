@@ -22,15 +22,15 @@ This section shows how to implement EC2 instance with nginx preinstalled on it.T
 Both an IAM user and an active AWS account are necessary. Before continuing, you need to create an access key (AWS_ACCESS_KEY_ID) and a secret key (AWS_SECRET_ACCESS_KEY) and export them to your environment.
 
 Navigate to folder Terrform/s3. Run s3.tf first, by using below commands
-terraform init
-terraform plan
-terraform apply
+terraform init,
+terraform plan,
+terraform apply,
 That command creates the bucket named "terraform-state-file-17062024". An IAM group, and a policy that grants access are assocaited with the bucket. The bucket is a prerequisite for storing the Terraform-generated tfstate file.
 
 After the bucket is up, navigate to folder Terrform/ec2. Run ec2.tf, by using below commands
-terraform init
-terraform plan
-terraform apply
+terraform init,
+terraform plan,
+terraform apply,
 It provisions the remaining components of the stack, including EC2 instances based on the Amazon AMI. An existing security group is retrieved using a data block, which is required to allow SSH access (incoming traffic from the outside world). SSH keys are also created in this step. The default VPC is used for provisioning.
 
 If you ever need to clean up, run "terraform destroy" to remove all the resources you created.
