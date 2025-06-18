@@ -2,9 +2,7 @@
 
 Cluster Configuration:
 
-The **Kind** tool (Kubernetes IN Docker) is used to create the Kubernetes cluster. Kind is perfect for local testing and development environments because it operates Kubernetes clusters inside Docker containers.
-
-An Nginx server is set up in this configuration as a pod inside the Kind cluster. Depending on the configuration, Nginx can be exposed either internally or externally using Kubernetes manifests (Deployment and Service YAMLs), which are used to define the deployment. This enables local testing of real-world deployment processes, such as service exposure, container orchestration, and integration with Argo CD.
+The **Kind** tool (Kubernetes IN Docker) is used to create the Kubernetes cluster. An Nginx server is set up in this configuration as a pod inside the Kind cluster. Depending on the configuration, Nginx can be exposed either internally or externally using Kubernetes manifests (Deployment and Service YAMLs), which are used to define the deployment. This enables local testing of real-world deployment processes, such as service exposure, container orchestration, and integration with Argo CD.
 
 Contionus Integration:
 
