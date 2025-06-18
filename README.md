@@ -1,17 +1,15 @@
 ## Deploying Kubernetes with Kind, GithubWorkflow and ArgoCD:
 
-Cluster Configuration
+Cluster Configuration:
 
 The **Kind** tool (Kubernetes IN Docker) is used to create the Kubernetes cluster. Kind is perfect for local testing and development environments because it operates Kubernetes clusters inside Docker containers.
 
-Contionus Integration
+Contionus Integration:
 
 Continuous Integration (CI) is implemented using **GitHub Actions**. Every time a change is pushed to the repository, a GitHub Actions workflow is initiated automatically. The following tasks are completed by this workflow:
-
 Examines the most recent code; creates a Docker image from the source; and uploads the image to the GitHub Container Registry or Docker Hub.
 
-Contionous Deployment
-
+Contionous Deployment:
 The deployment tool based on GitOps is called **Argo CD**. It is set up using the Kubernetes manifests from the Git repository. Argo CD keeps an eye on this repository for updates. When a fresh Docker
 
 
