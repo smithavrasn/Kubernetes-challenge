@@ -1,0 +1,4436 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T09:35:21Z"
+    generateName: argocd-application-controller-
+    labels:
+      app.kubernetes.io/name: argocd-application-controller
+      apps.kubernetes.io/pod-index: "0"
+      controller-revision-hash: argocd-application-controller-65cf48c6b6
+      statefulset.kubernetes.io/pod-name: argocd-application-controller-0
+    name: argocd-application-controller-0
+    namespace: argocd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: argocd-application-controller
+      uid: f99c77d5-ce22-462e-a731-dc37b22ff25c
+    resourceVersion: "18182"
+    uid: 39420fd5-567e-4837-9dff-1ad79b80c52d
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: argocd-application-controller
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/part-of: argocd
+            topologyKey: kubernetes.io/hostname
+          weight: 5
+    containers:
+    - args:
+      - /usr/local/bin/argocd-application-controller
+      env:
+      - name: REDIS_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: auth
+            name: argocd-redis
+      - name: ARGOCD_CONTROLLER_REPLICAS
+        value: "1"
+      - name: ARGOCD_RECONCILIATION_TIMEOUT
+        valueFrom:
+          configMapKeyRef:
+            key: timeout.reconciliation
+            name: argocd-cm
+            optional: true
+      - name: ARGOCD_HARD_RECONCILIATION_TIMEOUT
+        valueFrom:
+          configMapKeyRef:
+            key: timeout.hard.reconciliation
+            name: argocd-cm
+            optional: true
+      - name: ARGOCD_RECONCILIATION_JITTER
+        valueFrom:
+          configMapKeyRef:
+            key: timeout.reconciliation.jitter
+            name: argocd-cm
+            optional: true
+      - name: ARGOCD_REPO_ERROR_GRACE_PERIOD_SECONDS
+        valueFrom:
+          configMapKeyRef:
+            key: controller.repo.error.grace.period.seconds
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER
+        valueFrom:
+          configMapKeyRef:
+            key: repo.server
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER_TIMEOUT_SECONDS
+        valueFrom:
+          configMapKeyRef:
+            key: controller.repo.server.timeout.seconds
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_STATUS_PROCESSORS
+        valueFrom:
+          configMapKeyRef:
+            key: controller.status.processors
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_OPERATION_PROCESSORS
+        valueFrom:
+          configMapKeyRef:
+            key: controller.operation.processors
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_LOGFORMAT
+        valueFrom:
+          configMapKeyRef:
+            key: controller.log.format
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_LOGLEVEL
+        valueFrom:
+          configMapKeyRef:
+            key: controller.log.level
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_LOG_FORMAT_TIMESTAMP
+        valueFrom:
+          configMapKeyRef:
+            key: log.format.timestamp
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_METRICS_CACHE_EXPIRATION
+        valueFrom:
+          configMapKeyRef:
+            key: controller.metrics.cache.expiration
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_TIMEOUT_SECONDS
+        valueFrom:
+          configMapKeyRef:
+            key: controller.self.heal.timeout.seconds
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_BACKOFF_TIMEOUT_SECONDS
+        valueFrom:
+          configMapKeyRef:
+            key: controller.self.heal.backoff.timeout.seconds
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_BACKOFF_FACTOR
+        valueFrom:
+          configMapKeyRef:
+            key: controller.self.heal.backoff.factor
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_BACKOFF_CAP_SECONDS
+        valueFrom:
+          configMapKeyRef:
+            key: controller.self.heal.backoff.cap.seconds
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_BACKOFF_COOLDOWN_SECONDS
+        valueFrom:
+          configMapKeyRef:
+            key: controller.self.heal.backoff.cooldown.seconds
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_SYNC_TIMEOUT
+        valueFrom:
+          configMapKeyRef:
+            key: controller.sync.timeout.seconds
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER_PLAINTEXT
+        valueFrom:
+          configMapKeyRef:
+            key: controller.repo.server.plaintext
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER_STRICT_TLS
+        valueFrom:
+          configMapKeyRef:
+            key: controller.repo.server.strict.tls
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_PERSIST_RESOURCE_HEALTH
+        valueFrom:
+          configMapKeyRef:
+            key: controller.resource.health.persist
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APP_STATE_CACHE_EXPIRATION
+        valueFrom:
+          configMapKeyRef:
+            key: controller.app.state.cache.expiration
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: REDIS_SERVER
+        valueFrom:
+          configMapKeyRef:
+            key: redis.server
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: REDIS_COMPRESSION
+        valueFrom:
+          configMapKeyRef:
+            key: redis.compression
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: REDISDB
+        valueFrom:
+          configMapKeyRef:
+            key: redis.db
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_DEFAULT_CACHE_EXPIRATION
+        valueFrom:
+          configMapKeyRef:
+            key: controller.default.cache.expiration
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_OTLP_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.address
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_OTLP_INSECURE
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.insecure
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_OTLP_HEADERS
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.headers
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_OTLP_ATTRS
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.attrs
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_NAMESPACES
+        valueFrom:
+          configMapKeyRef:
+            key: application.namespaces
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_CONTROLLER_SHARDING_ALGORITHM
+        valueFrom:
+          configMapKeyRef:
+            key: controller.sharding.algorithm
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_KUBECTL_PARALLELISM_LIMIT
+        valueFrom:
+          configMapKeyRef:
+            key: controller.kubectl.parallelism.limit
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_K8SCLIENT_RETRY_MAX
+        valueFrom:
+          configMapKeyRef:
+            key: controller.k8sclient.retry.max
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_K8SCLIENT_RETRY_BASE_BACKOFF
+        valueFrom:
+          configMapKeyRef:
+            key: controller.k8sclient.retry.base.backoff
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_CONTROLLER_SERVER_SIDE_DIFF
+        valueFrom:
+          configMapKeyRef:
+            key: controller.diff.server.side
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_IGNORE_NORMALIZER_JQ_TIMEOUT
+        valueFrom:
+          configMapKeyRef:
+            key: controller.ignore.normalizer.jq.timeout
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_HYDRATOR_ENABLED
+        valueFrom:
+          configMapKeyRef:
+            key: hydrator.enabled
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_CLUSTER_CACHE_BATCH_EVENTS_PROCESSING
+        valueFrom:
+          configMapKeyRef:
+            key: controller.cluster.cache.batch.events.processing
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_CLUSTER_CACHE_EVENTS_PROCESSING_INTERVAL
+        valueFrom:
+          configMapKeyRef:
+            key: controller.cluster.cache.events.processing.interval
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: KUBECACHEDIR
+        value: /tmp/kubecache
+      image: quay.io/argoproj/argocd:v3.0.6
+      imagePullPolicy: Always
+      name: argocd-application-controller
+      ports:
+      - containerPort: 8082
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 8082
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config/controller/tls
+        name: argocd-repo-server-tls
+      - mountPath: /home/argocd
+        name: argocd-home
+      - mountPath: /home/argocd/params
+        name: argocd-cmd-params-cm
+      - mountPath: /tmp
+        name: argocd-application-controller-tmp
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-pz7w5
+        readOnly: true
+      workingDir: /home/argocd
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: argocd-application-controller-0
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: argocd-application-controller
+    serviceAccountName: argocd-application-controller
+    subdomain: argocd-application-controller
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: argocd-home
+    - emptyDir: {}
+      name: argocd-application-controller-tmp
+    - name: argocd-repo-server-tls
+      secret:
+        defaultMode: 420
+        items:
+        - key: tls.crt
+          path: tls.crt
+        - key: tls.key
+          path: tls.key
+        - key: ca.crt
+          path: ca.crt
+        optional: true
+        secretName: argocd-repo-server-tls
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: controller.profile.enabled
+          path: profiler.enabled
+        name: argocd-cmd-params-cm
+        optional: true
+      name: argocd-cmd-params-cm
+    - name: kube-api-access-pz7w5
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:55Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:21Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:37:06Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:37:06Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:21Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://887363f7ea05d3f30392b6d01c45eccfb9a3ce0d0ff70553fd33503323e4f015
+      image: quay.io/argoproj/argocd:v3.0.6
+      imageID: quay.io/argoproj/argocd@sha256:a45307e2695d0fd93713e3d211b71086ac75a85dc8afbb28a249bdc4b3b0b2b9
+      lastState: {}
+      name: argocd-application-controller
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T09:36:55Z"
+      volumeMounts:
+      - mountPath: /app/config/controller/tls
+        name: argocd-repo-server-tls
+      - mountPath: /home/argocd
+        name: argocd-home
+      - mountPath: /home/argocd/params
+        name: argocd-cmd-params-cm
+      - mountPath: /tmp
+        name: argocd-application-controller-tmp
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-pz7w5
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 10.244.0.11
+    podIPs:
+    - ip: 10.244.0.11
+    qosClass: BestEffort
+    startTime: "2025-06-17T09:35:21Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T09:35:20Z"
+    generateName: argocd-applicationset-controller-655cc58ff8-
+    labels:
+      app.kubernetes.io/name: argocd-applicationset-controller
+      pod-template-hash: 655cc58ff8
+    name: argocd-applicationset-controller-655cc58ff8-vdwtc
+    namespace: argocd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: argocd-applicationset-controller-655cc58ff8
+      uid: 6e345378-be0b-4e48-bc77-b53c3a0ac9c0
+    resourceVersion: "18150"
+    uid: ba44b730-14d4-4432-b34c-b7c9a11d5539
+  spec:
+    containers:
+    - args:
+      - /usr/local/bin/argocd-applicationset-controller
+      env:
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_GLOBAL_PRESERVED_ANNOTATIONS
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.global.preserved.annotations
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_GLOBAL_PRESERVED_LABELS
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.global.preserved.labels
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_LEADER_ELECTION
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.enable.leader.election
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_REPO_SERVER
+        valueFrom:
+          configMapKeyRef:
+            key: repo.server
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_POLICY
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.policy
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_POLICY_OVERRIDE
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.enable.policy.override
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_DEBUG
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.debug
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_LOGFORMAT
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.log.format
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_LOGLEVEL
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.log.level
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_LOG_FORMAT_TIMESTAMP
+        valueFrom:
+          configMapKeyRef:
+            key: log.format.timestamp
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_DRY_RUN
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.dryrun
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_GIT_MODULES_ENABLED
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.enable.git.submodule
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_PROGRESSIVE_SYNCS
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.enable.progressive.syncs
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_TOKENREF_STRICT_MODE
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.enable.tokenref.strict.mode
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_NEW_GIT_FILE_GLOBBING
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.enable.new.git.file.globbing
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_REPO_SERVER_PLAINTEXT
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.repo.server.plaintext
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_REPO_SERVER_STRICT_TLS
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.repo.server.strict.tls
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_REPO_SERVER_TIMEOUT_SECONDS
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.repo.server.timeout.seconds
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_CONCURRENT_RECONCILIATIONS
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.concurrent.reconciliations.max
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_NAMESPACES
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.namespaces
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_SCM_ROOT_CA_PATH
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.scm.root.ca.path
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_ALLOWED_SCM_PROVIDERS
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.allowed.scm.providers
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_SCM_PROVIDERS
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.enable.scm.providers
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_WEBHOOK_PARALLELISM_LIMIT
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.webhook.parallelism.limit
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_REQUEUE_AFTER
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.requeue.after
+            name: argocd-cmd-params-cm
+            optional: true
+      image: quay.io/argoproj/argocd:v3.0.6
+      imagePullPolicy: Always
+      name: argocd-applicationset-controller
+      ports:
+      - containerPort: 7000
+        name: webhook
+        protocol: TCP
+      - containerPort: 8080
+        name: metrics
+        protocol: TCP
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config/ssh
+        name: ssh-known-hosts
+      - mountPath: /app/config/tls
+        name: tls-certs
+      - mountPath: /app/config/gpg/source
+        name: gpg-keys
+      - mountPath: /app/config/gpg/keys
+        name: gpg-keyring
+      - mountPath: /tmp
+        name: tmp
+      - mountPath: /app/config/reposerver/tls
+        name: argocd-repo-server-tls
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-bssmh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: argocd-applicationset-controller
+    serviceAccountName: argocd-applicationset-controller
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: argocd-ssh-known-hosts-cm
+      name: ssh-known-hosts
+    - configMap:
+        defaultMode: 420
+        name: argocd-tls-certs-cm
+      name: tls-certs
+    - configMap:
+        defaultMode: 420
+        name: argocd-gpg-keys-cm
+      name: gpg-keys
+    - emptyDir: {}
+      name: gpg-keyring
+    - emptyDir: {}
+      name: tmp
+    - name: argocd-repo-server-tls
+      secret:
+        defaultMode: 420
+        items:
+        - key: tls.crt
+          path: tls.crt
+        - key: tls.key
+          path: tls.key
+        - key: ca.crt
+          path: ca.crt
+        optional: true
+        secretName: argocd-repo-server-tls
+    - name: kube-api-access-bssmh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:54Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:21Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:54Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:54Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:20Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://fa1490e34441a1ca3fa52d676031110bbee863997a5562172f4b4d12b22e8973
+      image: quay.io/argoproj/argocd:v3.0.6
+      imageID: quay.io/argoproj/argocd@sha256:a45307e2695d0fd93713e3d211b71086ac75a85dc8afbb28a249bdc4b3b0b2b9
+      lastState: {}
+      name: argocd-applicationset-controller
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T09:36:53Z"
+      volumeMounts:
+      - mountPath: /app/config/ssh
+        name: ssh-known-hosts
+      - mountPath: /app/config/tls
+        name: tls-certs
+      - mountPath: /app/config/gpg/source
+        name: gpg-keys
+      - mountPath: /app/config/gpg/keys
+        name: gpg-keyring
+      - mountPath: /tmp
+        name: tmp
+      - mountPath: /app/config/reposerver/tls
+        name: argocd-repo-server-tls
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-bssmh
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 10.244.0.10
+    podIPs:
+    - ip: 10.244.0.10
+    qosClass: BestEffort
+    startTime: "2025-06-17T09:35:21Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T09:35:20Z"
+    generateName: argocd-dex-server-7d9dfb4fb8-
+    labels:
+      app.kubernetes.io/name: argocd-dex-server
+      pod-template-hash: 7d9dfb4fb8
+    name: argocd-dex-server-7d9dfb4fb8-qznpb
+    namespace: argocd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: argocd-dex-server-7d9dfb4fb8
+      uid: 819f9c14-471d-4a9e-b351-d6d12af5077e
+    resourceVersion: "18239"
+    uid: 33bc0b44-30b9-48dc-8e46-9c458d66e63f
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/part-of: argocd
+            topologyKey: kubernetes.io/hostname
+          weight: 5
+    containers:
+    - command:
+      - /shared/argocd-dex
+      - rundex
+      env:
+      - name: ARGOCD_DEX_SERVER_LOGFORMAT
+        valueFrom:
+          configMapKeyRef:
+            key: dexserver.log.format
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_DEX_SERVER_LOGLEVEL
+        valueFrom:
+          configMapKeyRef:
+            key: dexserver.log.level
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_LOG_FORMAT_TIMESTAMP
+        valueFrom:
+          configMapKeyRef:
+            key: log.format.timestamp
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_DEX_SERVER_DISABLE_TLS
+        valueFrom:
+          configMapKeyRef:
+            key: dexserver.disable.tls
+            name: argocd-cmd-params-cm
+            optional: true
+      image: ghcr.io/dexidp/dex:v2.41.1
+      imagePullPolicy: Always
+      name: dex
+      ports:
+      - containerPort: 5556
+        protocol: TCP
+      - containerPort: 5557
+        protocol: TCP
+      - containerPort: 5558
+        protocol: TCP
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /shared
+        name: static-files
+      - mountPath: /tmp
+        name: dexconfig
+      - mountPath: /tls
+        name: argocd-dex-server-tls
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4ljqn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    initContainers:
+    - command:
+      - /bin/cp
+      - -n
+      - /usr/local/bin/argocd
+      - /shared/argocd-dex
+      image: quay.io/argoproj/argocd:v3.0.6
+      imagePullPolicy: Always
+      name: copyutil
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /shared
+        name: static-files
+      - mountPath: /tmp
+        name: dexconfig
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4ljqn
+        readOnly: true
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: argocd-dex-server
+    serviceAccountName: argocd-dex-server
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: static-files
+    - emptyDir: {}
+      name: dexconfig
+    - name: argocd-dex-server-tls
+      secret:
+        defaultMode: 420
+        items:
+        - key: tls.crt
+          path: tls.crt
+        - key: tls.key
+          path: tls.key
+        - key: ca.crt
+          path: ca.crt
+        optional: true
+        secretName: argocd-dex-server-tls
+    - name: kube-api-access-4ljqn
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:34Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:57Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:37:24Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:37:24Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:20Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://e58131e770ee0ad90a9c387beaec72e0db84a62c1899a29bb71d6ee4d1530efd
+      image: ghcr.io/dexidp/dex:v2.41.1
+      imageID: ghcr.io/dexidp/dex@sha256:bc7cfce7c17f52864e2bb2a4dc1d2f86a41e3019f6d42e81d92a301fad0c8a1d
+      lastState: {}
+      name: dex
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T09:37:23Z"
+      volumeMounts:
+      - mountPath: /shared
+        name: static-files
+      - mountPath: /tmp
+        name: dexconfig
+      - mountPath: /tls
+        name: argocd-dex-server-tls
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4ljqn
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    initContainerStatuses:
+    - containerID: containerd://b7becee77a612e2bed3b6127ca513b1dd3901ee332f819ce5efde1de58bf224f
+      image: quay.io/argoproj/argocd:v3.0.6
+      imageID: quay.io/argoproj/argocd@sha256:a45307e2695d0fd93713e3d211b71086ac75a85dc8afbb28a249bdc4b3b0b2b9
+      lastState: {}
+      name: copyutil
+      ready: true
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://b7becee77a612e2bed3b6127ca513b1dd3901ee332f819ce5efde1de58bf224f
+          exitCode: 0
+          finishedAt: "2025-06-17T09:36:56Z"
+          reason: Completed
+          startedAt: "2025-06-17T09:36:56Z"
+      volumeMounts:
+      - mountPath: /shared
+        name: static-files
+      - mountPath: /tmp
+        name: dexconfig
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4ljqn
+        readOnly: true
+        recursiveReadOnly: Disabled
+    phase: Running
+    podIP: 10.244.0.5
+    podIPs:
+    - ip: 10.244.0.5
+    qosClass: BestEffort
+    startTime: "2025-06-17T09:35:21Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T09:35:20Z"
+    generateName: argocd-notifications-controller-6c6848bc4c-
+    labels:
+      app.kubernetes.io/name: argocd-notifications-controller
+      pod-template-hash: 6c6848bc4c
+    name: argocd-notifications-controller-6c6848bc4c-579vs
+    namespace: argocd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: argocd-notifications-controller-6c6848bc4c
+      uid: 4f0c0f9c-e841-40b7-8308-c07f884371d6
+    resourceVersion: "18107"
+    uid: a3b6211c-fa56-4b5c-acbd-43f859ded942
+  spec:
+    containers:
+    - args:
+      - /usr/local/bin/argocd-notifications
+      env:
+      - name: ARGOCD_NOTIFICATIONS_CONTROLLER_LOGFORMAT
+        valueFrom:
+          configMapKeyRef:
+            key: notificationscontroller.log.format
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_NOTIFICATIONS_CONTROLLER_LOGLEVEL
+        valueFrom:
+          configMapKeyRef:
+            key: notificationscontroller.log.level
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_LOG_FORMAT_TIMESTAMP
+        valueFrom:
+          configMapKeyRef:
+            key: log.format.timestamp
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_NAMESPACES
+        valueFrom:
+          configMapKeyRef:
+            key: application.namespaces
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_NOTIFICATION_CONTROLLER_SELF_SERVICE_NOTIFICATION_ENABLED
+        valueFrom:
+          configMapKeyRef:
+            key: notificationscontroller.selfservice.enabled
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_NOTIFICATION_CONTROLLER_REPO_SERVER_PLAINTEXT
+        valueFrom:
+          configMapKeyRef:
+            key: notificationscontroller.repo.server.plaintext
+            name: argocd-cmd-params-cm
+            optional: true
+      image: quay.io/argoproj/argocd:v3.0.6
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 9001
+        timeoutSeconds: 1
+      name: argocd-notifications-controller
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config/tls
+        name: tls-certs
+      - mountPath: /app/config/reposerver/tls
+        name: argocd-repo-server-tls
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-cdk7p
+        readOnly: true
+      workingDir: /app
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: argocd-notifications-controller
+    serviceAccountName: argocd-notifications-controller
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: argocd-tls-certs-cm
+      name: tls-certs
+    - name: argocd-repo-server-tls
+      secret:
+        defaultMode: 420
+        items:
+        - key: tls.crt
+          path: tls.crt
+        - key: tls.key
+          path: tls.key
+        - key: ca.crt
+          path: ca.crt
+        optional: true
+        secretName: argocd-repo-server-tls
+    - name: kube-api-access-cdk7p
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:50Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:21Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:50Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:50Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:20Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://c205689e0eed6876c2ad824b06993ae8504e22b098c7d331f23536afbac77dbf
+      image: quay.io/argoproj/argocd:v3.0.6
+      imageID: quay.io/argoproj/argocd@sha256:a45307e2695d0fd93713e3d211b71086ac75a85dc8afbb28a249bdc4b3b0b2b9
+      lastState: {}
+      name: argocd-notifications-controller
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T09:36:49Z"
+      volumeMounts:
+      - mountPath: /app/config/tls
+        name: tls-certs
+      - mountPath: /app/config/reposerver/tls
+        name: argocd-repo-server-tls
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-cdk7p
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 10.244.0.6
+    podIPs:
+    - ip: 10.244.0.6
+    qosClass: BestEffort
+    startTime: "2025-06-17T09:35:21Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T09:35:21Z"
+    generateName: argocd-redis-656c79549c-
+    labels:
+      app.kubernetes.io/name: argocd-redis
+      pod-template-hash: 656c79549c
+    name: argocd-redis-656c79549c-5xzgw
+    namespace: argocd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: argocd-redis-656c79549c
+      uid: 00b2e639-403f-481d-99b1-aee55e22b338
+    resourceVersion: "18191"
+    uid: e3ca29d4-f2d2-44cd-9a50-7d02acd9aa21
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: argocd-redis
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/part-of: argocd
+            topologyKey: kubernetes.io/hostname
+          weight: 5
+    containers:
+    - args:
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+      - --requirepass $(REDIS_PASSWORD)
+      env:
+      - name: REDIS_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: auth
+            name: argocd-redis
+      image: redis:7.2.7-alpine
+      imagePullPolicy: Always
+      name: redis
+      ports:
+      - containerPort: 6379
+        protocol: TCP
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-l2z9f
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    initContainers:
+    - command:
+      - argocd
+      - admin
+      - redis-initial-password
+      image: quay.io/argoproj/argocd:v3.0.6
+      imagePullPolicy: IfNotPresent
+      name: secret-init
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-l2z9f
+        readOnly: true
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 999
+      seccompProfile:
+        type: RuntimeDefault
+    serviceAccount: argocd-redis
+    serviceAccountName: argocd-redis
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-l2z9f
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:51Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:52Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:37:07Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:37:07Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:21Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://b2fff9c73ddadb92d9fb2da0e6d50e691f4e899d8673d72f7685011d7007747e
+      image: docker.io/library/redis:7.2.7-alpine
+      imageID: docker.io/library/redis@sha256:ddd16a9b1575a774c7e62956be8daa1de5b32cfb5c25b7a216aefed8e0919f9b
+      lastState: {}
+      name: redis
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T09:37:07Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-l2z9f
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    initContainerStatuses:
+    - containerID: containerd://5c8aabac3b9173aec08d1ac07e4f97adc4342a27359c3c85e4309767dac14652
+      image: quay.io/argoproj/argocd:v3.0.6
+      imageID: quay.io/argoproj/argocd@sha256:a45307e2695d0fd93713e3d211b71086ac75a85dc8afbb28a249bdc4b3b0b2b9
+      lastState: {}
+      name: secret-init
+      ready: true
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://5c8aabac3b9173aec08d1ac07e4f97adc4342a27359c3c85e4309767dac14652
+          exitCode: 0
+          finishedAt: "2025-06-17T09:36:51Z"
+          reason: Completed
+          startedAt: "2025-06-17T09:36:51Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-l2z9f
+        readOnly: true
+        recursiveReadOnly: Disabled
+    phase: Running
+    podIP: 10.244.0.7
+    podIPs:
+    - ip: 10.244.0.7
+    qosClass: BestEffort
+    startTime: "2025-06-17T09:35:21Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T09:35:21Z"
+    generateName: argocd-repo-server-856b768fd9-
+    labels:
+      app.kubernetes.io/name: argocd-repo-server
+      pod-template-hash: 856b768fd9
+    name: argocd-repo-server-856b768fd9-v474v
+    namespace: argocd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: argocd-repo-server-856b768fd9
+      uid: f339b92a-881b-4104-a369-24494c1876ca
+    resourceVersion: "18218"
+    uid: 097c4aa5-8303-4231-9913-10a7724814f2
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: argocd-repo-server
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/part-of: argocd
+            topologyKey: kubernetes.io/hostname
+          weight: 5
+    automountServiceAccountToken: false
+    containers:
+    - args:
+      - /usr/local/bin/argocd-repo-server
+      env:
+      - name: REDIS_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: auth
+            name: argocd-redis
+      - name: ARGOCD_RECONCILIATION_TIMEOUT
+        valueFrom:
+          configMapKeyRef:
+            key: timeout.reconciliation
+            name: argocd-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_LOGFORMAT
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.log.format
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_LOGLEVEL
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.log.level
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_LOG_FORMAT_TIMESTAMP
+        valueFrom:
+          configMapKeyRef:
+            key: log.format.timestamp
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_PARALLELISM_LIMIT
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.parallelism.limit
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_LISTEN_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.listen.address
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_LISTEN_METRICS_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.metrics.listen.address
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_DISABLE_TLS
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.disable.tls
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_TLS_MIN_VERSION
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.tls.minversion
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_TLS_MAX_VERSION
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.tls.maxversion
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_TLS_CIPHERS
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.tls.ciphers
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_CACHE_EXPIRATION
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.repo.cache.expiration
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: REDIS_SERVER
+        valueFrom:
+          configMapKeyRef:
+            key: redis.server
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: REDIS_COMPRESSION
+        valueFrom:
+          configMapKeyRef:
+            key: redis.compression
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: REDISDB
+        valueFrom:
+          configMapKeyRef:
+            key: redis.db
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_DEFAULT_CACHE_EXPIRATION
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.default.cache.expiration
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_OTLP_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.address
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_OTLP_INSECURE
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.insecure
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_OTLP_HEADERS
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.headers
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_OTLP_ATTRS
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.attrs
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_MAX_COMBINED_DIRECTORY_MANIFESTS_SIZE
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.max.combined.directory.manifests.size
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_PLUGIN_TAR_EXCLUSIONS
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.plugin.tar.exclusions
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_PLUGIN_USE_MANIFEST_GENERATE_PATHS
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.plugin.use.manifest.generate.paths
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_ALLOW_OUT_OF_BOUNDS_SYMLINKS
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.allow.oob.symlinks
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_STREAMED_MANIFEST_MAX_TAR_SIZE
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.streamed.manifest.max.tar.size
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_STREAMED_MANIFEST_MAX_EXTRACTED_SIZE
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.streamed.manifest.max.extracted.size
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_HELM_MANIFEST_MAX_EXTRACTED_SIZE
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.helm.manifest.max.extracted.size
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_DISABLE_HELM_MANIFEST_MAX_EXTRACTED_SIZE
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.disable.helm.manifest.max.extracted.size
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REVISION_CACHE_LOCK_TIMEOUT
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.revision.cache.lock.timeout
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_GIT_MODULES_ENABLED
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.enable.git.submodule
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_GIT_LS_REMOTE_PARALLELISM_LIMIT
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.git.lsremote.parallelism.limit
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_GIT_REQUEST_TIMEOUT
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.git.request.timeout
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_GRPC_MAX_SIZE_MB
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.grpc.max.size
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_REPO_SERVER_INCLUDE_HIDDEN_DIRECTORIES
+        valueFrom:
+          configMapKeyRef:
+            key: reposerver.include.hidden.directories
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: HELM_CACHE_HOME
+        value: /helm-working-dir
+      - name: HELM_CONFIG_HOME
+        value: /helm-working-dir
+      - name: HELM_DATA_HOME
+        value: /helm-working-dir
+      image: quay.io/argoproj/argocd:v3.0.6
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz?full=true
+          port: 8084
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: argocd-repo-server
+      ports:
+      - containerPort: 8081
+        protocol: TCP
+      - containerPort: 8084
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 8084
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config/ssh
+        name: ssh-known-hosts
+      - mountPath: /app/config/tls
+        name: tls-certs
+      - mountPath: /app/config/gpg/source
+        name: gpg-keys
+      - mountPath: /app/config/gpg/keys
+        name: gpg-keyring
+      - mountPath: /app/config/reposerver/tls
+        name: argocd-repo-server-tls
+      - mountPath: /tmp
+        name: tmp
+      - mountPath: /helm-working-dir
+        name: helm-working-dir
+      - mountPath: /home/argocd/cmp-server/plugins
+        name: plugins
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    initContainers:
+    - command:
+      - /bin/cp
+      - -n
+      - /usr/local/bin/argocd
+      - /var/run/argocd/argocd-cmp-server
+      image: quay.io/argoproj/argocd:v3.0.6
+      imagePullPolicy: IfNotPresent
+      name: copyutil
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/argocd
+        name: var-files
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: argocd-repo-server
+    serviceAccountName: argocd-repo-server
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: argocd-ssh-known-hosts-cm
+      name: ssh-known-hosts
+    - configMap:
+        defaultMode: 420
+        name: argocd-tls-certs-cm
+      name: tls-certs
+    - configMap:
+        defaultMode: 420
+        name: argocd-gpg-keys-cm
+      name: gpg-keys
+    - emptyDir: {}
+      name: gpg-keyring
+    - emptyDir: {}
+      name: tmp
+    - emptyDir: {}
+      name: helm-working-dir
+    - name: argocd-repo-server-tls
+      secret:
+        defaultMode: 420
+        items:
+        - key: tls.crt
+          path: tls.crt
+        - key: tls.key
+          path: tls.key
+        - key: ca.crt
+          path: ca.crt
+        optional: true
+        secretName: argocd-repo-server-tls
+    - emptyDir: {}
+      name: var-files
+    - emptyDir: {}
+      name: plugins
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:52Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:53Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:37:20Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:37:20Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:21Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://ce3cd14fa498da25ef1a94ef376da4aaf81103e61cd1d14d254c6d3730d56251
+      image: quay.io/argoproj/argocd:v3.0.6
+      imageID: quay.io/argoproj/argocd@sha256:a45307e2695d0fd93713e3d211b71086ac75a85dc8afbb28a249bdc4b3b0b2b9
+      lastState: {}
+      name: argocd-repo-server
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T09:37:08Z"
+      volumeMounts:
+      - mountPath: /app/config/ssh
+        name: ssh-known-hosts
+      - mountPath: /app/config/tls
+        name: tls-certs
+      - mountPath: /app/config/gpg/source
+        name: gpg-keys
+      - mountPath: /app/config/gpg/keys
+        name: gpg-keyring
+      - mountPath: /app/config/reposerver/tls
+        name: argocd-repo-server-tls
+      - mountPath: /tmp
+        name: tmp
+      - mountPath: /helm-working-dir
+        name: helm-working-dir
+      - mountPath: /home/argocd/cmp-server/plugins
+        name: plugins
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    initContainerStatuses:
+    - containerID: containerd://cbedb023465a7b8322feceeefa25b63ae58f2dc7f3e0effb26385a237666f080
+      image: quay.io/argoproj/argocd:v3.0.6
+      imageID: quay.io/argoproj/argocd@sha256:a45307e2695d0fd93713e3d211b71086ac75a85dc8afbb28a249bdc4b3b0b2b9
+      lastState: {}
+      name: copyutil
+      ready: true
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://cbedb023465a7b8322feceeefa25b63ae58f2dc7f3e0effb26385a237666f080
+          exitCode: 0
+          finishedAt: "2025-06-17T09:36:52Z"
+          reason: Completed
+          startedAt: "2025-06-17T09:36:52Z"
+      volumeMounts:
+      - mountPath: /var/run/argocd
+        name: var-files
+    phase: Running
+    podIP: 10.244.0.8
+    podIPs:
+    - ip: 10.244.0.8
+    qosClass: BestEffort
+    startTime: "2025-06-17T09:35:21Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T09:35:21Z"
+    generateName: argocd-server-99c485944-
+    labels:
+      app.kubernetes.io/name: argocd-server
+      pod-template-hash: 99c485944
+    name: argocd-server-99c485944-djg2z
+    namespace: argocd
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: argocd-server-99c485944
+      uid: 389e01ad-fad1-4bcb-9ede-0919e0d09039
+    resourceVersion: "18232"
+    uid: 605b67fb-f5fc-4d2e-9446-7ba3cb79663e
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: argocd-server
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/part-of: argocd
+            topologyKey: kubernetes.io/hostname
+          weight: 5
+    containers:
+    - args:
+      - /usr/local/bin/argocd-server
+      env:
+      - name: REDIS_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: auth
+            name: argocd-redis
+      - name: ARGOCD_SERVER_INSECURE
+        valueFrom:
+          configMapKeyRef:
+            key: server.insecure
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_BASEHREF
+        valueFrom:
+          configMapKeyRef:
+            key: server.basehref
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_ROOTPATH
+        valueFrom:
+          configMapKeyRef:
+            key: server.rootpath
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_LOGFORMAT
+        valueFrom:
+          configMapKeyRef:
+            key: server.log.format
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_LOG_LEVEL
+        valueFrom:
+          configMapKeyRef:
+            key: server.log.level
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_REPO_SERVER
+        valueFrom:
+          configMapKeyRef:
+            key: repo.server
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_DEX_SERVER
+        valueFrom:
+          configMapKeyRef:
+            key: server.dex.server
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_DISABLE_AUTH
+        valueFrom:
+          configMapKeyRef:
+            key: server.disable.auth
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_ENABLE_GZIP
+        valueFrom:
+          configMapKeyRef:
+            key: server.enable.gzip
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_REPO_SERVER_TIMEOUT_SECONDS
+        valueFrom:
+          configMapKeyRef:
+            key: server.repo.server.timeout.seconds
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_X_FRAME_OPTIONS
+        valueFrom:
+          configMapKeyRef:
+            key: server.x.frame.options
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_CONTENT_SECURITY_POLICY
+        valueFrom:
+          configMapKeyRef:
+            key: server.content.security.policy
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_REPO_SERVER_PLAINTEXT
+        valueFrom:
+          configMapKeyRef:
+            key: server.repo.server.plaintext
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_REPO_SERVER_STRICT_TLS
+        valueFrom:
+          configMapKeyRef:
+            key: server.repo.server.strict.tls
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_DEX_SERVER_PLAINTEXT
+        valueFrom:
+          configMapKeyRef:
+            key: server.dex.server.plaintext
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_DEX_SERVER_STRICT_TLS
+        valueFrom:
+          configMapKeyRef:
+            key: server.dex.server.strict.tls
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_TLS_MIN_VERSION
+        valueFrom:
+          configMapKeyRef:
+            key: server.tls.minversion
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_TLS_MAX_VERSION
+        valueFrom:
+          configMapKeyRef:
+            key: server.tls.maxversion
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_TLS_CIPHERS
+        valueFrom:
+          configMapKeyRef:
+            key: server.tls.ciphers
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_CONNECTION_STATUS_CACHE_EXPIRATION
+        valueFrom:
+          configMapKeyRef:
+            key: server.connection.status.cache.expiration
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_OIDC_CACHE_EXPIRATION
+        valueFrom:
+          configMapKeyRef:
+            key: server.oidc.cache.expiration
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_LOGIN_ATTEMPTS_EXPIRATION
+        valueFrom:
+          configMapKeyRef:
+            key: server.login.attempts.expiration
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_STATIC_ASSETS
+        valueFrom:
+          configMapKeyRef:
+            key: server.staticassets
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APP_STATE_CACHE_EXPIRATION
+        valueFrom:
+          configMapKeyRef:
+            key: server.app.state.cache.expiration
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: REDIS_SERVER
+        valueFrom:
+          configMapKeyRef:
+            key: redis.server
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: REDIS_COMPRESSION
+        valueFrom:
+          configMapKeyRef:
+            key: redis.compression
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: REDISDB
+        valueFrom:
+          configMapKeyRef:
+            key: redis.db
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_DEFAULT_CACHE_EXPIRATION
+        valueFrom:
+          configMapKeyRef:
+            key: server.default.cache.expiration
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_MAX_COOKIE_NUMBER
+        valueFrom:
+          configMapKeyRef:
+            key: server.http.cookie.maxnumber
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_LISTEN_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: server.listen.address
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_METRICS_LISTEN_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: server.metrics.listen.address
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_OTLP_ADDRESS
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.address
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_OTLP_INSECURE
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.insecure
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_OTLP_HEADERS
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.headers
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_OTLP_ATTRS
+        valueFrom:
+          configMapKeyRef:
+            key: otlp.attrs
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATION_NAMESPACES
+        valueFrom:
+          configMapKeyRef:
+            key: application.namespaces
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_ENABLE_PROXY_EXTENSION
+        valueFrom:
+          configMapKeyRef:
+            key: server.enable.proxy.extension
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_K8SCLIENT_RETRY_MAX
+        valueFrom:
+          configMapKeyRef:
+            key: server.k8sclient.retry.max
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_K8SCLIENT_RETRY_BASE_BACKOFF
+        valueFrom:
+          configMapKeyRef:
+            key: server.k8sclient.retry.base.backoff
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_API_CONTENT_TYPES
+        valueFrom:
+          configMapKeyRef:
+            key: server.api.content.types
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SERVER_WEBHOOK_PARALLELISM_LIMIT
+        valueFrom:
+          configMapKeyRef:
+            key: server.webhook.parallelism.limit
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_NEW_GIT_FILE_GLOBBING
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.enable.new.git.file.globbing
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_SCM_ROOT_CA_PATH
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.scm.root.ca.path
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_ALLOWED_SCM_PROVIDERS
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.allowed.scm.providers
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_SCM_PROVIDERS
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.enable.scm.providers
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_HYDRATOR_ENABLED
+        valueFrom:
+          configMapKeyRef:
+            key: hydrator.enabled
+            name: argocd-cmd-params-cm
+            optional: true
+      - name: ARGOCD_SYNC_WITH_REPLACE_ALLOWED
+        valueFrom:
+          configMapKeyRef:
+            key: server.sync.replace.allowed
+            name: argocd-cmd-params-cm
+            optional: true
+      image: quay.io/argoproj/argocd:v3.0.6
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz?full=true
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 3
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: argocd-server
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      - containerPort: 8083
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 3
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config/ssh
+        name: ssh-known-hosts
+      - mountPath: /app/config/tls
+        name: tls-certs
+      - mountPath: /app/config/server/tls
+        name: argocd-repo-server-tls
+      - mountPath: /app/config/dex/tls
+        name: argocd-dex-server-tls
+      - mountPath: /home/argocd
+        name: plugins-home
+      - mountPath: /tmp
+        name: tmp
+      - mountPath: /home/argocd/params
+        name: argocd-cmd-params-cm
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7925j
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: argocd-server
+    serviceAccountName: argocd-server
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: plugins-home
+    - emptyDir: {}
+      name: tmp
+    - configMap:
+        defaultMode: 420
+        name: argocd-ssh-known-hosts-cm
+      name: ssh-known-hosts
+    - configMap:
+        defaultMode: 420
+        name: argocd-tls-certs-cm
+      name: tls-certs
+    - name: argocd-repo-server-tls
+      secret:
+        defaultMode: 420
+        items:
+        - key: tls.crt
+          path: tls.crt
+        - key: tls.key
+          path: tls.key
+        - key: ca.crt
+          path: ca.crt
+        optional: true
+        secretName: argocd-repo-server-tls
+    - name: argocd-dex-server-tls
+      secret:
+        defaultMode: 420
+        items:
+        - key: tls.crt
+          path: tls.crt
+        - key: ca.crt
+          path: ca.crt
+        optional: true
+        secretName: argocd-dex-server-tls
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: server.profile.enabled
+          path: profiler.enabled
+        name: argocd-cmd-params-cm
+        optional: true
+      name: argocd-cmd-params-cm
+    - name: kube-api-access-7925j
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:36:53Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:21Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:37:24Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:37:24Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T09:35:21Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://f7aa85bd2efa98c6ae7fdf03a5b9c3ad99983f33cf9132c2655a8e3793a8418b
+      image: quay.io/argoproj/argocd:v3.0.6
+      imageID: quay.io/argoproj/argocd@sha256:a45307e2695d0fd93713e3d211b71086ac75a85dc8afbb28a249bdc4b3b0b2b9
+      lastState: {}
+      name: argocd-server
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T09:36:52Z"
+      volumeMounts:
+      - mountPath: /app/config/ssh
+        name: ssh-known-hosts
+      - mountPath: /app/config/tls
+        name: tls-certs
+      - mountPath: /app/config/server/tls
+        name: argocd-repo-server-tls
+      - mountPath: /app/config/dex/tls
+        name: argocd-dex-server-tls
+      - mountPath: /home/argocd
+        name: plugins-home
+      - mountPath: /tmp
+        name: tmp
+      - mountPath: /home/argocd/params
+        name: argocd-cmd-params-cm
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7925j
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 10.244.0.9
+    podIPs:
+    - ip: 10.244.0.9
+    qosClass: BestEffort
+    startTime: "2025-06-17T09:35:21Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T16:47:01Z"
+    generateName: nginx-deployment-b7fb86c47-
+    labels:
+      app: nginx
+      pod-template-hash: b7fb86c47
+    name: nginx-deployment-b7fb86c47-9q4c5
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: nginx-deployment-b7fb86c47
+      uid: 5a6525fa-4897-4e2d-a584-62fb0421d8b7
+    resourceVersion: "36318"
+    uid: 66de7514-c0a3-4ff7-b386-5b11cc6467fc
+  spec:
+    containers:
+    - image: smithav/kubernetes-challenge:v1
+      imagePullPolicy: IfNotPresent
+      name: nginx
+      ports:
+      - containerPort: 80
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-hxgck
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: my-secret
+    nodeName: mcp-control-plane
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-hxgck
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:02Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:01Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:02Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:02Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:01Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://8fb7c51f748a2ca851351564aa2aac4533a8e0a42ccb15e6bf4cff0a78559e2e
+      image: docker.io/smithav/kubernetes-challenge:v1
+      imageID: docker.io/smithav/kubernetes-challenge@sha256:34569d4af190cdbe79921cd62244a622e0f7906ebb9509dc9c18f7cef67e3e9d
+      lastState: {}
+      name: nginx
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T16:47:02Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-hxgck
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 10.244.0.18
+    podIPs:
+    - ip: 10.244.0.18
+    qosClass: BestEffort
+    startTime: "2025-06-17T16:47:01Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T16:47:02Z"
+    generateName: nginx-deployment-b7fb86c47-
+    labels:
+      app: nginx
+      pod-template-hash: b7fb86c47
+    name: nginx-deployment-b7fb86c47-dwstp
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: nginx-deployment-b7fb86c47
+      uid: 5a6525fa-4897-4e2d-a584-62fb0421d8b7
+    resourceVersion: "36352"
+    uid: 116e6d25-ca4b-4ab7-a280-96942541ef90
+  spec:
+    containers:
+    - image: smithav/kubernetes-challenge:v1
+      imagePullPolicy: IfNotPresent
+      name: nginx
+      ports:
+      - containerPort: 80
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lz8mv
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: my-secret
+    nodeName: mcp-control-plane
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-lz8mv
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:03Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:02Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:03Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:03Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:02Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://0a9990eb3ea2ffe9691f3d27abdb13e309f83daf0699c7a386d0cde2ed46a7fc
+      image: docker.io/smithav/kubernetes-challenge:v1
+      imageID: docker.io/smithav/kubernetes-challenge@sha256:34569d4af190cdbe79921cd62244a622e0f7906ebb9509dc9c18f7cef67e3e9d
+      lastState: {}
+      name: nginx
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T16:47:03Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-lz8mv
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 10.244.0.19
+    podIPs:
+    - ip: 10.244.0.19
+    qosClass: BestEffort
+    startTime: "2025-06-17T16:47:02Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T16:46:47Z"
+    generateName: nginx-deployment-b7fb86c47-
+    labels:
+      app: nginx
+      pod-template-hash: b7fb86c47
+    name: nginx-deployment-b7fb86c47-l92k9
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: nginx-deployment-b7fb86c47
+      uid: 5a6525fa-4897-4e2d-a584-62fb0421d8b7
+    resourceVersion: "36284"
+    uid: 9eb5818b-6e64-443f-95d0-2902d1ee82b7
+  spec:
+    containers:
+    - image: smithav/kubernetes-challenge:v1
+      imagePullPolicy: IfNotPresent
+      name: nginx
+      ports:
+      - containerPort: 80
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-2l7xs
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: my-secret
+    nodeName: mcp-control-plane
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-2l7xs
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:01Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:46:47Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:01Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:47:01Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T16:46:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://e24dab5a75163bc57e1deadcc1a5b1e70b25a7bc99b8ea79115cda45070dc215
+      image: docker.io/smithav/kubernetes-challenge:v1
+      imageID: docker.io/smithav/kubernetes-challenge@sha256:34569d4af190cdbe79921cd62244a622e0f7906ebb9509dc9c18f7cef67e3e9d
+      lastState: {}
+      name: nginx
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T16:47:00Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-2l7xs
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 10.244.0.17
+    podIPs:
+    - ip: 10.244.0.17
+    qosClass: BestEffort
+    startTime: "2025-06-17T16:46:47Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T05:52:24Z"
+    generateName: coredns-668d6bf9bc-
+    labels:
+      k8s-app: kube-dns
+      pod-template-hash: 668d6bf9bc
+    name: coredns-668d6bf9bc-bqnff
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: coredns-668d6bf9bc
+      uid: 8215540f-40ba-49cd-93f8-8b661ef9d5a7
+    resourceVersion: "442"
+    uid: cb47f19a-e3a6-43ee-b62b-916ea7c2d9b4
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: k8s-app
+                operator: In
+                values:
+                - kube-dns
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+    containers:
+    - args:
+      - -conf
+      - /etc/coredns/Corefile
+      image: registry.k8s.io/coredns/coredns:v1.11.3
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 5
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: coredns
+      ports:
+      - containerPort: 53
+        name: dns
+        protocol: UDP
+      - containerPort: 53
+        name: dns-tcp
+        protocol: TCP
+      - containerPort: 9153
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ready
+          port: 8181
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          memory: 170Mi
+        requests:
+          cpu: 100m
+          memory: 70Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          add:
+          - NET_BIND_SERVICE
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/coredns
+        name: config-volume
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-jspcf
+        readOnly: true
+    dnsPolicy: Default
+    enableServiceLinks: true
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: coredns
+    serviceAccountName: coredns
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: Corefile
+          path: Corefile
+        name: coredns
+      name: config-volume
+    - name: kube-api-access-jspcf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:41Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:38Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:41Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:41Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:38Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://d5c2b0e501c8d65df4714f59c904cd5c6dec12b1220ad3fa6735d314158a333f
+      image: registry.k8s.io/coredns/coredns:v1.11.3
+      imageID: sha256:c69fa2e9cbf5f42dc48af631e956d3f95724c13f91596bc567591790e5e36db6
+      lastState: {}
+      name: coredns
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T05:52:40Z"
+      volumeMounts:
+      - mountPath: /etc/coredns
+        name: config-volume
+        readOnly: true
+        recursiveReadOnly: Disabled
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-jspcf
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 10.244.0.4
+    podIPs:
+    - ip: 10.244.0.4
+    qosClass: Burstable
+    startTime: "2025-06-17T05:52:38Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T05:52:24Z"
+    generateName: coredns-668d6bf9bc-
+    labels:
+      k8s-app: kube-dns
+      pod-template-hash: 668d6bf9bc
+    name: coredns-668d6bf9bc-m4zpq
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: coredns-668d6bf9bc
+      uid: 8215540f-40ba-49cd-93f8-8b661ef9d5a7
+    resourceVersion: "437"
+    uid: 04867422-57a6-4984-bf08-8469d7f0f869
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: k8s-app
+                operator: In
+                values:
+                - kube-dns
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+    containers:
+    - args:
+      - -conf
+      - /etc/coredns/Corefile
+      image: registry.k8s.io/coredns/coredns:v1.11.3
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 5
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: coredns
+      ports:
+      - containerPort: 53
+        name: dns
+        protocol: UDP
+      - containerPort: 53
+        name: dns-tcp
+        protocol: TCP
+      - containerPort: 9153
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ready
+          port: 8181
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          memory: 170Mi
+        requests:
+          cpu: 100m
+          memory: 70Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          add:
+          - NET_BIND_SERVICE
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/coredns
+        name: config-volume
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dr5tf
+        readOnly: true
+    dnsPolicy: Default
+    enableServiceLinks: true
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: coredns
+    serviceAccountName: coredns
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: Corefile
+          path: Corefile
+        name: coredns
+      name: config-volume
+    - name: kube-api-access-dr5tf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:41Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:38Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:41Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:41Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:38Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://2babaa4ceda83a1e9aa24e7294bdb50e8ebaf11562f9b569ac4c0adf6ca8e762
+      image: registry.k8s.io/coredns/coredns:v1.11.3
+      imageID: sha256:c69fa2e9cbf5f42dc48af631e956d3f95724c13f91596bc567591790e5e36db6
+      lastState: {}
+      name: coredns
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T05:52:40Z"
+      volumeMounts:
+      - mountPath: /etc/coredns
+        name: config-volume
+        readOnly: true
+        recursiveReadOnly: Disabled
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dr5tf
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 10.244.0.3
+    podIPs:
+    - ip: 10.244.0.3
+    qosClass: Burstable
+    startTime: "2025-06-17T05:52:38Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubeadm.kubernetes.io/etcd.advertise-client-urls: https://172.18.0.2:2379
+      kubernetes.io/config.hash: 8853b70aa48016d15fa819ba29232724
+      kubernetes.io/config.mirror: 8853b70aa48016d15fa819ba29232724
+      kubernetes.io/config.seen: "2025-06-17T05:52:19.040760776Z"
+      kubernetes.io/config.source: file
+    creationTimestamp: "2025-06-17T05:52:19Z"
+    labels:
+      component: etcd
+      tier: control-plane
+    name: etcd-mcp-control-plane
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: v1
+      controller: true
+      kind: Node
+      name: mcp-control-plane
+      uid: 8e5c5bb9-8f45-4a60-8e35-7f030030c521
+    resourceVersion: "392"
+    uid: b96408b3-6cf7-4a1e-bd98-cf73ce5f9167
+  spec:
+    containers:
+    - command:
+      - etcd
+      - --advertise-client-urls=https://172.18.0.2:2379
+      - --cert-file=/etc/kubernetes/pki/etcd/server.crt
+      - --client-cert-auth=true
+      - --data-dir=/var/lib/etcd
+      - --experimental-initial-corrupt-check=true
+      - --experimental-watch-progress-notify-interval=5s
+      - --initial-advertise-peer-urls=https://172.18.0.2:2380
+      - --initial-cluster=mcp-control-plane=https://172.18.0.2:2380
+      - --key-file=/etc/kubernetes/pki/etcd/server.key
+      - --listen-client-urls=https://127.0.0.1:2379,https://172.18.0.2:2379
+      - --listen-metrics-urls=http://127.0.0.1:2381
+      - --listen-peer-urls=https://172.18.0.2:2380
+      - --name=mcp-control-plane
+      - --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+      - --peer-client-cert-auth=true
+      - --peer-key-file=/etc/kubernetes/pki/etcd/peer.key
+      - --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+      - --snapshot-count=10000
+      - --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+      image: registry.k8s.io/etcd:3.5.16-0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 8
+        httpGet:
+          host: 127.0.0.1
+          path: /livez
+          port: 2381
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      name: etcd
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          host: 127.0.0.1
+          path: /readyz
+          port: 2381
+          scheme: HTTP
+        periodSeconds: 1
+        successThreshold: 1
+        timeoutSeconds: 15
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      startupProbe:
+        failureThreshold: 24
+        httpGet:
+          host: 127.0.0.1
+          path: /readyz
+          port: 2381
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/etcd
+        name: etcd-data
+      - mountPath: /etc/kubernetes/pki/etcd
+        name: etcd-certs
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: mcp-control-plane
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc/kubernetes/pki/etcd
+        type: DirectoryOrCreate
+      name: etcd-certs
+    - hostPath:
+        path: /var/lib/etcd
+        type: DirectoryOrCreate
+      name: etcd-data
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:29Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:29Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://584e1aadfccb00ab91536ae986fc2b821bb96269f65b209cc1c52630213d5e8f
+      image: registry.k8s.io/etcd:3.5.16-0
+      imageID: sha256:a9e7e6b294baf1695fccb862d956c5d3ad8510e1e4ca1535f35dc09f247abbfc
+      lastState: {}
+      name: etcd
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T05:52:14Z"
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 172.18.0.2
+    podIPs:
+    - ip: 172.18.0.2
+    qosClass: Burstable
+    startTime: "2025-06-17T05:52:19Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T05:52:24Z"
+    generateName: kindnet-
+    labels:
+      app: kindnet
+      controller-revision-hash: 846d4b7c88
+      k8s-app: kindnet
+      pod-template-generation: "1"
+      tier: node
+    name: kindnet-47szv
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: kindnet
+      uid: 92621c0c-4ea1-4b18-a403-a078ebb1f7ce
+    resourceVersion: "387"
+    uid: 3d8586a4-49a0-427c-83d5-4d127a529fa7
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - mcp-control-plane
+    containers:
+    - env:
+      - name: HOST_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.hostIP
+      - name: POD_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.podIP
+      - name: POD_SUBNET
+        value: 10.244.0.0/16
+      - name: CONTROL_PLANE_ENDPOINT
+        value: mcp-control-plane:6443
+      image: docker.io/kindest/kindnetd:v20250214-acbabc1a
+      imagePullPolicy: IfNotPresent
+      name: kindnet-cni
+      resources:
+        limits:
+          cpu: 100m
+          memory: 50Mi
+        requests:
+          cpu: 100m
+          memory: 50Mi
+      securityContext:
+        capabilities:
+          add:
+          - NET_RAW
+          - NET_ADMIN
+        privileged: false
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/cni/net.d
+        name: cni-cfg
+      - mountPath: /run/xtables.lock
+        name: xtables-lock
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-wrthd
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: kindnet
+    serviceAccountName: kindnet
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc/cni/net.d
+        type: ""
+      name: cni-cfg
+    - hostPath:
+        path: /run/xtables.lock
+        type: FileOrCreate
+      name: xtables-lock
+    - hostPath:
+        path: /lib/modules
+        type: ""
+      name: lib-modules
+    - name: kube-api-access-wrthd
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:28Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:24Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:28Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:28Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:24Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://5319b11ab207d80931e46b17a6a4dbd69400118b039d6e4b55a342be12d76e63
+      image: docker.io/kindest/kindnetd:v20250214-acbabc1a
+      imageID: sha256:df3849d954c98a7162c7bee7313ece357606e313d98ebd68b7aac5e961b1156f
+      lastState: {}
+      name: kindnet-cni
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T05:52:27Z"
+      volumeMounts:
+      - mountPath: /etc/cni/net.d
+        name: cni-cfg
+      - mountPath: /run/xtables.lock
+        name: xtables-lock
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+        recursiveReadOnly: Disabled
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-wrthd
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 172.18.0.2
+    podIPs:
+    - ip: 172.18.0.2
+    qosClass: Guaranteed
+    startTime: "2025-06-17T05:52:24Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 172.18.0.2:6443
+      kubernetes.io/config.hash: 39d5de47d06c9d205448ea017f64d4a1
+      kubernetes.io/config.mirror: 39d5de47d06c9d205448ea017f64d4a1
+      kubernetes.io/config.seen: "2025-06-17T05:52:19.040769977Z"
+      kubernetes.io/config.source: file
+    creationTimestamp: "2025-06-17T05:52:19Z"
+    labels:
+      component: kube-apiserver
+      tier: control-plane
+    name: kube-apiserver-mcp-control-plane
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: v1
+      controller: true
+      kind: Node
+      name: mcp-control-plane
+      uid: 8e5c5bb9-8f45-4a60-8e35-7f030030c521
+    resourceVersion: "399"
+    uid: 35883abd-0197-4002-a2ce-c635ed5e9737
+  spec:
+    containers:
+    - command:
+      - kube-apiserver
+      - --advertise-address=172.18.0.2
+      - --allow-privileged=true
+      - --authorization-mode=Node,RBAC
+      - --client-ca-file=/etc/kubernetes/pki/ca.crt
+      - --enable-admission-plugins=NodeRestriction
+      - --enable-bootstrap-token-auth=true
+      - --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
+      - --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
+      - --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
+      - --etcd-servers=https://127.0.0.1:2379
+      - --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt
+      - --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key
+      - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+      - --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt
+      - --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key
+      - --requestheader-allowed-names=front-proxy-client
+      - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+      - --requestheader-extra-headers-prefix=X-Remote-Extra-
+      - --requestheader-group-headers=X-Remote-Group
+      - --requestheader-username-headers=X-Remote-User
+      - --runtime-config=
+      - --secure-port=6443
+      - --service-account-issuer=https://kubernetes.default.svc.cluster.local
+      - --service-account-key-file=/etc/kubernetes/pki/sa.pub
+      - --service-account-signing-key-file=/etc/kubernetes/pki/sa.key
+      - --service-cluster-ip-range=10.96.0.0/16
+      - --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
+      - --tls-private-key-file=/etc/kubernetes/pki/apiserver.key
+      image: registry.k8s.io/kube-apiserver:v1.32.2
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 8
+        httpGet:
+          host: 172.18.0.2
+          path: /livez
+          port: 6443
+          scheme: HTTPS
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      name: kube-apiserver
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          host: 172.18.0.2
+          path: /readyz
+          port: 6443
+          scheme: HTTPS
+        periodSeconds: 1
+        successThreshold: 1
+        timeoutSeconds: 15
+      resources:
+        requests:
+          cpu: 250m
+      startupProbe:
+        failureThreshold: 24
+        httpGet:
+          host: 172.18.0.2
+          path: /livez
+          port: 6443
+          scheme: HTTPS
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/ssl/certs
+        name: ca-certs
+        readOnly: true
+      - mountPath: /etc/ca-certificates
+        name: etc-ca-certificates
+        readOnly: true
+      - mountPath: /etc/kubernetes/pki
+        name: k8s-certs
+        readOnly: true
+      - mountPath: /usr/local/share/ca-certificates
+        name: usr-local-share-ca-certificates
+        readOnly: true
+      - mountPath: /usr/share/ca-certificates
+        name: usr-share-ca-certificates
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: mcp-control-plane
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc/ssl/certs
+        type: DirectoryOrCreate
+      name: ca-certs
+    - hostPath:
+        path: /etc/ca-certificates
+        type: DirectoryOrCreate
+      name: etc-ca-certificates
+    - hostPath:
+        path: /etc/kubernetes/pki
+        type: DirectoryOrCreate
+      name: k8s-certs
+    - hostPath:
+        path: /usr/local/share/ca-certificates
+        type: DirectoryOrCreate
+      name: usr-local-share-ca-certificates
+    - hostPath:
+        path: /usr/share/ca-certificates
+        type: DirectoryOrCreate
+      name: usr-share-ca-certificates
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:32Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:32Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://d2ace75e237ab52cec7bfec045954db24fcc78aa7012db7bc7c6408507161363
+      image: registry.k8s.io/kube-apiserver-amd64:v1.32.2
+      imageID: sha256:85b7a174738baecbc53029b7913cd430a2060e0cbdb5f56c7957d32ff7f241ef
+      lastState: {}
+      name: kube-apiserver
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T05:52:13Z"
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 172.18.0.2
+    podIPs:
+    - ip: 172.18.0.2
+    qosClass: Burstable
+    startTime: "2025-06-17T05:52:19Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubernetes.io/config.hash: 845c283b5e70080a905d4b8c37784d64
+      kubernetes.io/config.mirror: 845c283b5e70080a905d4b8c37784d64
+      kubernetes.io/config.seen: "2025-06-17T05:52:10.949423335Z"
+      kubernetes.io/config.source: file
+    creationTimestamp: "2025-06-17T05:52:18Z"
+    labels:
+      component: kube-controller-manager
+      tier: control-plane
+    name: kube-controller-manager-mcp-control-plane
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: v1
+      controller: true
+      kind: Node
+      name: mcp-control-plane
+      uid: 8e5c5bb9-8f45-4a60-8e35-7f030030c521
+    resourceVersion: "384"
+    uid: f25ceb2b-736e-4995-98cf-8698aa879e20
+  spec:
+    containers:
+    - command:
+      - kube-controller-manager
+      - --allocate-node-cidrs=true
+      - --authentication-kubeconfig=/etc/kubernetes/controller-manager.conf
+      - --authorization-kubeconfig=/etc/kubernetes/controller-manager.conf
+      - --bind-address=127.0.0.1
+      - --client-ca-file=/etc/kubernetes/pki/ca.crt
+      - --cluster-cidr=10.244.0.0/16
+      - --cluster-name=mcp
+      - --cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt
+      - --cluster-signing-key-file=/etc/kubernetes/pki/ca.key
+      - --controllers=*,bootstrapsigner,tokencleaner
+      - --enable-hostpath-provisioner=true
+      - --kubeconfig=/etc/kubernetes/controller-manager.conf
+      - --leader-elect=true
+      - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+      - --root-ca-file=/etc/kubernetes/pki/ca.crt
+      - --service-account-private-key-file=/etc/kubernetes/pki/sa.key
+      - --service-cluster-ip-range=10.96.0.0/16
+      - --use-service-account-credentials=true
+      image: registry.k8s.io/kube-controller-manager:v1.32.2
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 8
+        httpGet:
+          host: 127.0.0.1
+          path: /healthz
+          port: 10257
+          scheme: HTTPS
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      name: kube-controller-manager
+      resources:
+        requests:
+          cpu: 200m
+      startupProbe:
+        failureThreshold: 24
+        httpGet:
+          host: 127.0.0.1
+          path: /healthz
+          port: 10257
+          scheme: HTTPS
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/ssl/certs
+        name: ca-certs
+        readOnly: true
+      - mountPath: /etc/ca-certificates
+        name: etc-ca-certificates
+        readOnly: true
+      - mountPath: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+        name: flexvolume-dir
+      - mountPath: /etc/kubernetes/pki
+        name: k8s-certs
+        readOnly: true
+      - mountPath: /etc/kubernetes/controller-manager.conf
+        name: kubeconfig
+        readOnly: true
+      - mountPath: /usr/local/share/ca-certificates
+        name: usr-local-share-ca-certificates
+        readOnly: true
+      - mountPath: /usr/share/ca-certificates
+        name: usr-share-ca-certificates
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: mcp-control-plane
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc/ssl/certs
+        type: DirectoryOrCreate
+      name: ca-certs
+    - hostPath:
+        path: /etc/ca-certificates
+        type: DirectoryOrCreate
+      name: etc-ca-certificates
+    - hostPath:
+        path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+        type: DirectoryOrCreate
+      name: flexvolume-dir
+    - hostPath:
+        path: /etc/kubernetes/pki
+        type: DirectoryOrCreate
+      name: k8s-certs
+    - hostPath:
+        path: /etc/kubernetes/controller-manager.conf
+        type: FileOrCreate
+      name: kubeconfig
+    - hostPath:
+        path: /usr/local/share/ca-certificates
+        type: DirectoryOrCreate
+      name: usr-local-share-ca-certificates
+    - hostPath:
+        path: /usr/share/ca-certificates
+        type: DirectoryOrCreate
+      name: usr-share-ca-certificates
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:27Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:27Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://dd4ddfb8245e788e5b61422c3a114b206eb383277e5ce0ae2977bf5f38e8125f
+      image: registry.k8s.io/kube-controller-manager-amd64:v1.32.2
+      imageID: sha256:b6a454c5a800d201daacead6ff195ec6049fe6dc086621b0670bca912efaf389
+      lastState: {}
+      name: kube-controller-manager
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T05:52:12Z"
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 172.18.0.2
+    podIPs:
+    - ip: 172.18.0.2
+    qosClass: Burstable
+    startTime: "2025-06-17T05:52:19Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T05:52:24Z"
+    generateName: kube-proxy-
+    labels:
+      controller-revision-hash: 7bb84c4984
+      k8s-app: kube-proxy
+      pod-template-generation: "1"
+    name: kube-proxy-zf8kh
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: kube-proxy
+      uid: f32dd74b-de6d-4ee9-90e2-bbc70b2ea911
+    resourceVersion: "377"
+    uid: c1136854-c79f-48a8-af42-8b8c695305be
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - mcp-control-plane
+    containers:
+    - command:
+      - /usr/local/bin/kube-proxy
+      - --config=/var/lib/kube-proxy/config.conf
+      - --hostname-override=$(NODE_NAME)
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: registry.k8s.io/kube-proxy:v1.32.2
+      imagePullPolicy: IfNotPresent
+      name: kube-proxy
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/kube-proxy
+        name: kube-proxy
+      - mountPath: /run/xtables.lock
+        name: xtables-lock
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-ncbbb
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: kube-proxy
+    serviceAccountName: kube-proxy
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: kube-proxy
+      name: kube-proxy
+    - hostPath:
+        path: /run/xtables.lock
+        type: FileOrCreate
+      name: xtables-lock
+    - hostPath:
+        path: /lib/modules
+        type: ""
+      name: lib-modules
+    - name: kube-api-access-ncbbb
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:26Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:24Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:26Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:26Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:24Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://dc0347043cc02adcc2c75b91737591fb916fbfd4550b5442bde4bc61db2f2859
+      image: registry.k8s.io/kube-proxy-amd64:v1.32.2
+      imageID: sha256:f1332858868e1c6a905123b21e2e322ab45a5b99a3532e68ff49a87c2266ebc5
+      lastState: {}
+      name: kube-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T05:52:25Z"
+      volumeMounts:
+      - mountPath: /var/lib/kube-proxy
+        name: kube-proxy
+      - mountPath: /run/xtables.lock
+        name: xtables-lock
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+        recursiveReadOnly: Disabled
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-ncbbb
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 172.18.0.2
+    podIPs:
+    - ip: 172.18.0.2
+    qosClass: BestEffort
+    startTime: "2025-06-17T05:52:24Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubernetes.io/config.hash: e881f2717b131e02082db88d3a1de2ab
+      kubernetes.io/config.mirror: e881f2717b131e02082db88d3a1de2ab
+      kubernetes.io/config.seen: "2025-06-17T05:52:19.040776123Z"
+      kubernetes.io/config.source: file
+    creationTimestamp: "2025-06-17T05:52:19Z"
+    labels:
+      component: kube-scheduler
+      tier: control-plane
+    name: kube-scheduler-mcp-control-plane
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: v1
+      controller: true
+      kind: Node
+      name: mcp-control-plane
+      uid: 8e5c5bb9-8f45-4a60-8e35-7f030030c521
+    resourceVersion: "371"
+    uid: b36dd01a-a8f8-4d99-ab35-705a44c8723c
+  spec:
+    containers:
+    - command:
+      - kube-scheduler
+      - --authentication-kubeconfig=/etc/kubernetes/scheduler.conf
+      - --authorization-kubeconfig=/etc/kubernetes/scheduler.conf
+      - --bind-address=127.0.0.1
+      - --kubeconfig=/etc/kubernetes/scheduler.conf
+      - --leader-elect=true
+      image: registry.k8s.io/kube-scheduler:v1.32.2
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 8
+        httpGet:
+          host: 127.0.0.1
+          path: /livez
+          port: 10259
+          scheme: HTTPS
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      name: kube-scheduler
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          host: 127.0.0.1
+          path: /readyz
+          port: 10259
+          scheme: HTTPS
+        periodSeconds: 1
+        successThreshold: 1
+        timeoutSeconds: 15
+      resources:
+        requests:
+          cpu: 100m
+      startupProbe:
+        failureThreshold: 24
+        httpGet:
+          host: 127.0.0.1
+          path: /livez
+          port: 10259
+          scheme: HTTPS
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/kubernetes/scheduler.conf
+        name: kubeconfig
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: mcp-control-plane
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /etc/kubernetes/scheduler.conf
+        type: FileOrCreate
+      name: kubeconfig
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:25Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:25Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:19Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://aad2b12e508366d8386b8a5a89a03773a028748b53e03a5b9cec2d86686c276c
+      image: registry.k8s.io/kube-scheduler-amd64:v1.32.2
+      imageID: sha256:d8e673e7c9983f1f53569a9d2ba786c8abb42e3f744f77dc97a595f3caf9435d
+      lastState: {}
+      name: kube-scheduler
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T05:52:12Z"
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 172.18.0.2
+    podIPs:
+    - ip: 172.18.0.2
+    qosClass: Burstable
+    startTime: "2025-06-17T05:52:19Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-06-17T05:52:24Z"
+    generateName: local-path-provisioner-7dc846544d-
+    labels:
+      app: local-path-provisioner
+      pod-template-hash: 7dc846544d
+    name: local-path-provisioner-7dc846544d-brmr9
+    namespace: local-path-storage
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: local-path-provisioner-7dc846544d
+      uid: cc75a163-267a-45bd-b9d7-571824b8de78
+    resourceVersion: "435"
+    uid: f0e2215c-b39c-44a8-be36-b62d887aac51
+  spec:
+    containers:
+    - command:
+      - local-path-provisioner
+      - --debug
+      - start
+      - --helper-image
+      - docker.io/kindest/local-path-helper:v20241212-8ac705d0
+      - --config
+      - /etc/config/config.json
+      env:
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: CONFIG_MOUNT_PATH
+        value: /etc/config/
+      image: docker.io/kindest/local-path-provisioner:v20250214-acbabc1a
+      imagePullPolicy: IfNotPresent
+      name: local-path-provisioner
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/config/
+        name: config-volume
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-b2cg5
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mcp-control-plane
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: local-path-provisioner-service-account
+    serviceAccountName: local-path-provisioner-service-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+      operator: Equal
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Equal
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: local-path-config
+      name: config-volume
+    - name: kube-api-access-b2cg5
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:41Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:38Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:41Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:41Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-06-17T05:52:38Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://65af552ffb9bba0721e6f217fffb3a745bbafe7d50483291698aa487dbfc9e43
+      image: docker.io/kindest/local-path-provisioner:v20250214-acbabc1a
+      imageID: sha256:bbb6209cc873b9b4095bd014b4687512eea2bd7b246f9ec06f4f6f0be14d9fb6
+      lastState: {}
+      name: local-path-provisioner
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-06-17T05:52:41Z"
+      volumeMounts:
+      - mountPath: /etc/config/
+        name: config-volume
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-b2cg5
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Running
+    podIP: 10.244.0.2
+    podIPs:
+    - ip: 10.244.0.2
+    qosClass: BestEffort
+    startTime: "2025-06-17T05:52:38Z"
+kind: List
+metadata:
+  resourceVersion: ""
