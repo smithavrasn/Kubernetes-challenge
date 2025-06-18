@@ -10,7 +10,7 @@ Continuous Integration (CI) is implemented using **GitHub Actions**. Every time 
 Examines the most recent code; creates a Docker image from the source; and uploads the image to the GitHub Container Registry or Docker Hub.
 
 Contionous Deployment:
-The deployment tool based on GitOps is called **Argo CD**. It is set up using the Kubernetes manifests from the Git repository. Argo CD keeps an eye on this repository for updates. When a fresh Docker
+Argo CD is the deployment tool in use. The Kubernetes manifests from the Git repository are used to set it up. Argo CD keeps an eye out for updates in this repository. Argo CD detects updates automatically and deploys the changes to the Kubernetes cluster to synchronize the desired state whenever a new Docker image is pushed or changes are committed to the manifests. This makes it possible for the Git repository to be the only source of truth for application deployment in a smooth GitOps workflow.
 
 
 ## Deploying s3 and EC2 resources using Terraform
